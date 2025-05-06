@@ -2,8 +2,29 @@
 
 <h1>@Model.Symbol - Stock Price Chart</h1>
 
-<canvas id="stockChart" width="400" height="200"></canvas>
+<!-- Chart.js Canvas -->
+<div style="width: 60%; margin: 0 auto;">
+    <canvas id="stockChart" width="400" height="200"></canvas>
+</div>
 
+<!-- Display Stock Data in Text Format -->
+<div style="margin-top: 20px;">
+    <h3>Stock Data</h3>
+    <ul>
+        @foreach (var date in Model.Dates)
+        {
+            <li>
+                Date: @date - Closing Price: $@Model.ClosingPrices[Array.IndexOf(Model.Dates, date)].ToString("F2")
+                <!-- Edit and Delete Options for each stock entry -->
+                <a href="@Url.Action("Edit", "Stock", new { symbol = Model.Symbol, date = date })" class="btn btn-warning btn-sm">Edit</a> |
+                <a href="@Url.Action("Delete", "Stock", new { symbol = Model.Symbol, date = date })" class="btn btn-danger btn-sm">Delete</a>
+            </li>
+        }
+    </ul>
+</div>
+
+<!-- Chart.js Canvas Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     var ctx = document.getElementById('stockChart').getContext('2d');
     var stockChart = new Chart(ctx, {

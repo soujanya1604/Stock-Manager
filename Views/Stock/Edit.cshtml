@@ -1,0 +1,15 @@
+﻿@model PortfolioStock
+
+<h1>Edit Stock: @Model.Stock.Name</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Quantity">Quantity</label>
+        <input type="number" class="form-control" id="Quantity" name="Quantity" value="@Model.Quantity" min="1" required />
+    </div>
+
+    <!-- Add other fields here if needed, e.g. stock price, stock symbol -->
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="@Url.Action("GetStockPrice", "Stock", new { symbol = Model.Stock.Symbol })" class="btn btn-secondary">Cancel</a>
+</form>

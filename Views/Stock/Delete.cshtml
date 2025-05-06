@@ -1,0 +1,17 @@
+﻿@model PortfolioStock
+
+<h1>Delete Stock: @Model.Stock.Name</h1>
+
+<p>Are you sure you want to delete this stock from your portfolio?</p>
+
+<div>
+    <strong>Stock Name:</strong> @Model.Stock.Name
+</div>
+<div>
+    <strong>Quantity:</strong> @Model.Quantity
+</div>
+
+<form method="post">
+    <button type="submit" class="btn btn-danger">Delete Stock</button>
+    <a href="@Url.Action("GetStockPrice", "Stock", new { symbol = Model.Stock.Symbol })" class="btn btn-secondary">Cancel</a>
+</form>

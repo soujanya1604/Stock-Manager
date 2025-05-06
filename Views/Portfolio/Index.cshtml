@@ -5,7 +5,7 @@
 <table>
     <thead>
         <tr>
-            <th>Name</th>
+            <th>Portfolio Name</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -15,12 +15,37 @@
             <tr>
                 <td>@portfolio.Name</td>
                 <td>
-                    <a href="@Url.Action("Edit", "Portfolio", new { id = portfolio.Id })">Edit</a> |
-                    <a href="@Url.Action("Delete", "Portfolio", new { id = portfolio.Id })">Delete</a>
+                    <a href="@Url.Action("Edit", "Portfolio", new { id = portfolio.Id })">Edit Portfolio</a> |
+                    <a href="@Url.Action("Delete", "Portfolio", new { id = portfolio.Id })">Delete Portfolio</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <h4>Stocks in @portfolio.Name</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Stock Name</th>
+                                <th>Quantity</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var portfolioStock in portfolio.PortfolioStocks)
+                            {
+                                <tr>
+                                    <td>@portfolioStock.Stock.Name</td>
+                                    <td>@portfolioStock.Quantity</td>
+                                    <td>
+                                        <a href="@Url.Action("Edit", "Stock", new { id = portfolioStock.Id })">Edit</a> |
+                                        <a href="@Url.Action("Delete", "Stock", new { id = portfolioStock.Id })">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
-<a href="@Url.Action("Create", "Portfolio")">Create New Portfolio</a>
