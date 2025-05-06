@@ -106,7 +106,6 @@ namespace Stock_Manager.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, PortfolioStock portfolioStock)
         {
             if (id != portfolioStock.Id)
@@ -118,12 +117,12 @@ namespace Stock_Manager.Controllers
             {
                 try
                 {
-                    _context.Update(portfolioStock);  // Update the portfolio stock
-                    await _context.SaveChangesAsync();  // Save the changes
+                    _context.Update(portfolioStock); // Update the portfolio stock with the edited data
+                    await _context.SaveChangesAsync(); // Save the changes to the database
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PortfolioStockExists(portfolioStock.Id)) // Check if the stock exists
+                    if (!PortfolioStockExists(portfolioStock.Id)) // Check if the stock still exists in the database
                     {
                         return NotFound();
                     }
@@ -132,9 +131,8 @@ namespace Stock_Manager.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("GetStockPrice", "Stock", new { symbol = portfolioStock.Stock.Symbol });  // Redirect to view updated stock price
+                return RedirectToAction("GetStockPrice", "Stock", new { symbol = portfolioStock.Stock.Symbol }); // Redirect after successful edit
             }
-
             return View(portfolioStock); // Return the view with validation errors if any
         }
 
