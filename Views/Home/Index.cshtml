@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Welcome to the Stock Portfolio Manager</h1>
+
+<p>This web application allows you to manage a portfolio of stocks, track stock prices using real-time data from Alpha Vantage API, and perform CRUD operations on your portfolio.</p>
+
+<p>With this app, you can:</p>
+<ul>
+    <li>View real-time stock prices</li>
+    <li>Create, update, and delete your stock portfolio</li>
+    <li>Track your portfolio performance</li>
+</ul>
+
+<h3>Navigate to:</h3>
+<ul>
+    <li><a href="@Url.Action("Index", "Portfolio")">Your Portfolio</a></li>
+    <li><a href="@Url.Action("GetStockPrice", "Stock")">Track Stock Prices</a></li>
+    <li><a href="@Url.Action("AboutUs", "Home")">About Us</a></li>
+</ul>

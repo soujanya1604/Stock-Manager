@@ -1,0 +1,53 @@
+﻿@model StockChartViewModel
+
+<h1>@Model.Symbol - Stock Price Chart</h1>
+
+<canvas id="stockChart" width="400" height="200"></canvas>
+
+<script>
+    var ctx = document.getElementById('stockChart').getContext('2d');
+    var stockChart = new Chart(ctx, {
+        type: 'line', // Line chart type for stock data
+        data: {
+            labels: @Html.Raw(Json.Serialize(Model.Dates)), // X-axis: Dates
+            datasets: [{
+                label: '@Model.Symbol Stock Prices',
+                data: @Html.Raw(Json.Serialize(Model.ClosingPrices)), // Y-axis: Closing Prices
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true, // Fill the area under the line
+                tension: 0.1 // Smooth the line
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Closing Price (USD)'
+                    },
+                    ticks: {
+                        beginAtZero: false
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return '$' + tooltipItem.raw.toFixed(2); // Format the tooltip to show prices in USD
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>

@@ -1,0 +1,10 @@
+﻿@model Portfolio
+
+<h2>Delete Portfolio</h2>
+
+<p>Are you sure you want to delete the portfolio <strong>@Model.Name</strong>?</p>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <button type="submit" class="btn btn-danger">Delete Portfolio</button>
+    <a href="@Url.Action("Index", "Portfolio")" class="btn btn-secondary">Cancel</a>
+</form>
