@@ -6,7 +6,10 @@
     <input type="hidden" name="date" value="@Model.Date:yyyy-MM-dd" />
 
     <!-- Date field (hidden but included for completeness) -->
-    <input type="hidden" id="Date" name="Date" value="@Model.Date:yyyy-MM-dd" required />
+    <div class="form-group">
+        <label for="Date">Date</label>
+        <input type="hidden" id="Date" name="Date" value="@Model.Date:yyyy-MM-dd" required />
+    </div>
 
     <!-- Opening Price field -->
     <div class="form-group">

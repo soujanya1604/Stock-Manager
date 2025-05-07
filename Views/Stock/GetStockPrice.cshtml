@@ -45,19 +45,24 @@
                 var highPrice = ViewBag.StockData.HighPrices[i];
                 var lowPrice = ViewBag.StockData.LowPrices[i];
 
-                <tr>
-                    <td>@date</td>
-                    <td>@openingPrice.ToString("F2")</td>
-                    <td>@closingPrice.ToString("F2")</td>
-                    <td>@highPrice.ToString("F2")</td>
-                    <td>@lowPrice.ToString("F2")</td>
-                    <td>
-                        <a href="@Url.Action("Edit", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })"
-                           class="btn btn-sm btn-outline-secondary me-1">Edit</a>
-                        <a href="@Url.Action("Delete", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })"
-                           class="btn btn-sm btn-outline-danger">Delete</a>
-                    </td>
-                </tr>
+                // Check if quantity > 0 before displaying the stock row
+                var quantity = 0; // Replace with actual quantity from your database
+                if (quantity > 0)
+                {
+                    <tr>
+                        <td>@date</td>
+                        <td>@openingPrice.ToString("F2")</td>
+                        <td>@closingPrice.ToString("F2")</td>
+                        <td>@highPrice.ToString("F2")</td>
+                        <td>@lowPrice.ToString("F2")</td>
+                        <td>
+                            <a href="@Url.Action("Edit", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })"
+                               class="btn btn-sm btn-outline-secondary me-1">Edit</a>
+                            <a href="@Url.Action("Delete", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })"
+                               class="btn btn-sm btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>
