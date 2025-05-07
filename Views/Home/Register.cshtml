@@ -1,23 +1,108 @@
 ﻿@model Stock_Manager.Models.RegisterViewModel
 
-<h2>Register</h2>
+@{
+    ViewData["Title"] = "Register";
+}
 
-<form method="post">
-    <div class="form-group">
-        <label for="UserName">Username</label>
-        <input type="text" class="form-control" id="UserName" name="UserName" value="@Model.UserName" required />
-    </div>
+<div class="container">
+    <h2 class="text-center my-4">Create an Account</h2>
 
-    <div class="form-group">
-        <label for="Password">Password</label>
-        <input type="password" class="form-control" id="Password" name="Password" required />
-    </div>
+    <form method="post" class="form-container">
+        <div class="form-group">
+            <label for="UserName">Username</label>
+            <input type="text" class="form-control" id="UserName" name="UserName" value="@Model.UserName" required placeholder="Enter your username" />
+        </div>
 
-    <div class="form-group">
-        <label for="ConfirmPassword">Confirm Password</label>
-        <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" required />
-    </div>
+        <div class="form-group">
+            <label for="Password">Password</label>
+            <input type="password" class="form-control" id="Password" name="Password" required placeholder="Enter your password" />
+        </div>
 
-    <button type="submit" class="btn btn-primary">Register</button>
-    <a href="@Url.Action("Login", "Home")" class="btn btn-secondary">Already have an account? Login</a>
-</form>
+        <div class="form-group">
+            <label for="ConfirmPassword">Confirm Password</label>
+            <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" required placeholder="Confirm your password" />
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </div>
+
+        <div class="form-group text-center">
+            <a href="@Url.Action("Login", "Home")" class="btn btn-link">Already have an account? Login</a>
+        </div>
+    </form>
+</div>
+
+<style>
+    .container {
+        max-width: 500px;
+        margin-top: 50px;
+    }
+
+    h2 {
+        font-size: 2em;
+        font-weight: 700;
+        color: #4e73df;
+    }
+
+    .form-container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            font-size: 1em;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 100%;
+        }
+
+            .form-group input:focus {
+                border-color: #4e73df;
+                outline: none;
+                box-shadow: 0 0 5px rgba(78, 115, 223, 0.5);
+            }
+
+    .btn {
+        padding: 12px 0;
+        font-size: 1.1em;
+        font-weight: bold;
+        border-radius: 5px;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: #4e73df;
+        border-color: #4e73df;
+    }
+
+        .btn-primary:hover {
+            background-color: #2e59d9;
+            border-color: #2e59d9;
+        }
+
+    .btn-link {
+        font-size: 1em;
+        color: #4e73df;
+        text-decoration: none;
+    }
+
+        .btn-link:hover {
+            color: #2e59d9;
+            text-decoration: underline;
+        }
+</style>
