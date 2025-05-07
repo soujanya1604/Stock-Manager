@@ -2,20 +2,144 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Welcome to the Stock Portfolio Manager</h1>
+<style>
+    /* General Styles */
 
-<p>This web application allows you to manage a portfolio of stocks, track stock prices using real-time data from Alpha Vantage API, and perform CRUD operations on your portfolio.</p>
+    body {
+        font-family: 'Helvetica Neue', sans-serif;
+        background-color: #f9fafc;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        background-image: url('@Url.Content("~/images/Stock_Portfolio_Manager.png")');
+        background-size: cover;
+        background-position: center;
+    }
 
-<p>With this app, you can:</p>
-<ul>
-    <li>View real-time stock prices</li>
-    <li>Create, update, and delete your stock portfolio</li>
-    <li>Track your portfolio performance</li>
-</ul>
+    h1 {
+        text-align: center;
+        font-size: 3.5em;
+        color: #ffffff;
+        margin-top: 20px; /* Reduced gap between top and heading */
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+    }
 
-<h3>Navigate to:</h3>
-<ul>
-    <li><a href="@Url.Action("Index", "Portfolio")">Your Portfolio</a></li>
-    <li><a href="@Url.Action("GetStockPrice", "Stock")">Track Stock Prices</a></li>
-    <li><a href="@Url.Action("AboutUs", "Home")">About Us</a></li>
-</ul>
+    h3 {
+        font-size: 2.5em;
+        color: #3498db;
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    p {
+        font-size: 1.3em;
+        line-height: 1.6;
+        text-align: center;
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 0 20px;
+        color: #ffffff;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 20px auto;
+        text-align: center;
+    }
+
+        ul li {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+        }
+
+    a {
+        text-decoration: none;
+        color: #3498db;
+        font-weight: bold;
+        padding: 12px 25px;
+        border-radius: 6px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        display: inline-block;
+        font-size: 1.1em;
+        margin-top: 15px;
+    }
+
+        a:hover {
+            background-color: #3498db;
+            color: white;
+        }
+
+    .container {
+        padding: 50px 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .section {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+        .section h4 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .section p {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+    /* Button-like Navigation Links */
+
+    .nav-links {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 30px;
+    }
+
+        .nav-links a {
+            background-color: #3498db;
+            padding: 15px 30px;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
+
+            .nav-links a:hover {
+                background-color: #2980b9;
+            }
+</style>
+
+<div class="container">
+    <h1>Welcome to the Stock Portfolio Manager</h1>
+
+    <div class="section">
+        <h4>Manage Your Stock Portfolio</h4>
+        <p>This web application allows you to manage a portfolio of stocks, track stock prices using real-time data from Alpha Vantage API, and perform CRUD operations on your portfolio.</p>
+
+        <h4>What You Can Do:</h4>
+        <ul>
+            <li>View real-time stock prices</li>
+            <li>Create, update, and delete your stock portfolio</li>
+            <li>Track your portfolio performance</li>
+        </ul>
+    </div>
+
+    <h3>Navigate to:</h3>
+    <div class="nav-links">
+        <a href="@Url.Action("Index", "Portfolio")">Your Portfolio</a>
+        <a href="@Url.Action("GetStockPrice", "Stock")">Track Stock Prices</a>
+        <a href="@Url.Action("AboutUs", "Home")">About Us</a>
+    </div>
+</div>
