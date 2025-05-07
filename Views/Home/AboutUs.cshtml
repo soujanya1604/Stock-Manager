@@ -1,16 +1,142 @@
 ﻿@{
+
     ViewData["Title"] = "About Us";
+
 }
+
+<style>
+
+    /* General Styles */
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f7fc;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 3em;
+        color: #2c3e50;
+        margin-top: 50px;
+    }
+
+    /* Container for About Section */
+
+    .about-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+        .about-container p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            text-align: center;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
+
+    /* Team Members Section */
+
+    .team {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+    }
+
+    .team-member {
+        text-align: center;
+        width: 180px;
+    }
+
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #3498db;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .team-member h3 {
+            font-size: 1.2em;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+
+        .team-member p {
+            font-size: 1em;
+            color: #7f8c8d;
+        }
+
+    /* GitHub Link Section */
+
+    .github-link {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+        .github-link a {
+            font-size: 1.2em;
+            color: #3498db;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: 2px solid #3498db;
+            transition: all 0.3s ease;
+        }
+
+            .github-link a:hover {
+                background-color: #3498db;
+                color: #fff;
+            }
+</style>
 
 <h1>About Us</h1>
 
-<p>This project is developed by:</p>
-<ul>
-    <li>Soujanya Gullapalli - Developer</li>
-    <li>John Doe - Frontend Developer</li>
-    <li>Jane Smith - Backend Developer</li>
-</ul>
+<div class="about-container">
+    <p>This project is developed by:</p>
 
-<p>Project Summary: This web application allows users to manage stock portfolios, view real-time stock prices, and perform CRUD operations to track their investments.</p>
+    <!-- Team Members Section -->
+    <div class="team">
+        <div class="team-member">
+            <img src="~/images/Soujanya.jfif" alt="Person 1" />
+            <h3>Soujanya Gullapalli</h3>
+            <p>Lead Developer</p>
+        </div>
+        <div class="team-member">
+            <img src="~/images/Navya.jfif" alt="Person 2" />
+            <h3>Navya Maddineni</h3>
+            <p>Co-Developer</p>
+        </div>
+        <div class="team-member">
+            <img src="~/images/kadiatou.jfif" alt="Person 3" />
+            <h3>Kadiatou Sogodogo</h3>
+            <p>UI/UX Designer</p>
+        </div>
+        <div class="team-member">
+            <img src="~/images/Sree.jpg" alt="Person 4" />
+            <h3>Sreedurga Koppula</h3>
+            <p>Quality Assurance</p>
+        </div>
+    </div>
 
-<p><strong>GitHub Repository:</strong> <a href="https://github.com/your-repository">Link to GitHub</a></p>
+    <!-- Project Summary Section -->
+    <p>Project Summary: This web application allows users to manage stock portfolios, view real-time stock prices, and perform CRUD operations to track their investments.</p>
+
+    <!-- GitHub Repository Link -->
+    <div class="github-link">
+        <strong>GitHub Repository:</strong> <a href="https://github.com/your-repository">Link to GitHub</a>
+    </div>
+</div>
+

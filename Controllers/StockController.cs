@@ -288,15 +288,17 @@ namespace Stock_Manager.Controllers
         // GET: Stock/Create
         public IActionResult Create()
         {
-            // Initialize an empty portfolioStock model for the Create form
-            var portfolioStock = new PortfolioStock();
+            var portfolioStock = new PortfolioStock
+            {
+                Stock = new Stock() // Initialize the Stock property to avoid NullReferenceException
+            };
 
-            // Populate dropdown list with stock symbols
             var stockSymbols = new List<string> { "AAPL", "GOOGL", "MSFT", "AMZN" };
             ViewBag.StockSymbols = new SelectList(stockSymbols);
 
-            return View(portfolioStock);
+            return View(portfolioStock);  // Pass the initialized portfolioStock model to the view
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
