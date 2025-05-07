@@ -29,7 +29,49 @@ namespace Stock_Manager.Controllers
                 symbol = "AAPL";  // Default symbol
             }
 
-            var stockSymbols = new List<string> { "AAPL", "GOOGL", "MSFT", "AMZN" };
+            var stockSymbols = new List<string>
+{
+    "AAPL",  // Apple Inc.
+    "GOOGL", // Alphabet Inc. (Google)
+    "MSFT",  // Microsoft Corporation
+    "AMZN",  // Amazon.com, Inc.
+    "TSLA",  // Tesla, Inc.
+    "FB",    // Meta Platforms, Inc. (formerly Facebook)
+    "NFLX",  // Netflix, Inc.
+    "NVDA",  // NVIDIA Corporation
+    "INTC",  // Intel Corporation
+    "AMD",   // Advanced Micro Devices, Inc.
+    "BA",    // The Boeing Company
+    "DIS",   // The Walt Disney Company
+    "V",     // Visa Inc.
+    "MA",    // Mastercard Incorporated
+    "PYPL",  // PayPal Holdings, Inc.
+    "CSCO",  // Cisco Systems, Inc.
+    "IBM",   // International Business Machines Corporation
+    "BABA",  // Alibaba Group Holding Limited
+    "SPY",   // SPDR S&P 500 ETF Trust
+    "QQQ",   // Invesco QQQ Trust
+    "XOM",   // Exxon Mobil Corporation
+    "CVX",   // Chevron Corporation
+    "GE",    // General Electric Company
+    "WMT",   // Walmart Inc.
+    "KO",    // The Coca-Cola Company
+    "PEP",   // PepsiCo, Inc.
+    "MCD",   // McDonald's Corporation
+    "NKE",   // NIKE, Inc.
+    "T",     // AT&T Inc.
+    "VZ",    // Verizon Communications Inc.
+    "GM",    // General Motors Company
+    "F",     // Ford Motor Company
+    "SLB",   // Schlumberger Limited
+    "PFE",   // Pfizer Inc.
+    "MRK",   // Merck & Co., Inc.
+    "JNJ",   // Johnson & Johnson
+    "AMGN",  // Amgen Inc.
+    "GILD",  // Gilead Sciences, Inc.
+    "BMY",   // Bristol-Myers Squibb Company
+    "LLY"    // Eli Lilly and Company
+};
             ViewBag.StockSymbols = new SelectList(stockSymbols, symbol);  // Populate dropdown with stock symbols
 
             // Check if the stock data exists in the in-memory database
