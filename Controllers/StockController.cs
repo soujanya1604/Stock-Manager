@@ -23,6 +23,7 @@ namespace Stock_Manager.Controllers
         // Action method for getting stock data
         public async Task<IActionResult> GetStockPrice(string symbol)
         {
+
             // Default to AAPL if no symbol is selected
             if (string.IsNullOrEmpty(symbol))
             {
@@ -284,20 +285,19 @@ namespace Stock_Manager.Controllers
         }
 
 
-        // Action to create a new stock
-        // GET: Stock/Create
         public IActionResult Create()
         {
             var portfolioStock = new PortfolioStock
             {
-                Stock = new Stock() // Initialize the Stock property to avoid NullReferenceException
+                Stock = new Stock() // Ensure stock is initialized
             };
 
             var stockSymbols = new List<string> { "AAPL", "GOOGL", "MSFT", "AMZN" };
             ViewBag.StockSymbols = new SelectList(stockSymbols);
 
-            return View(portfolioStock);  // Pass the initialized portfolioStock model to the view
+            return View(portfolioStock);
         }
+
 
 
         [HttpPost]
@@ -323,8 +323,14 @@ namespace Stock_Manager.Controllers
                 return RedirectToAction("GetStockPrice", "Stock", new { symbol = portfolioStock.Stock.Symbol });
             }
 
-            return View(portfolioStock);
+            // If ModelState is invalid, log errors and return to the view
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                Console.WriteLine(error.ErrorMessage);
+            }
+            return View(portfolioStock); // Return the form with error messages
         }
+
 
     }
 }
