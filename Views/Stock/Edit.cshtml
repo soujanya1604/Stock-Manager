@@ -3,12 +3,10 @@
 <form method="post">
     <!-- Hidden fields to store symbol and date -->
     <input type="hidden" name="symbol" value="@Model.Stock.Symbol" />
-    <input type="hidden" name="date" value="@Model.Date.ToString("yyyy-MM-dd")" />
+    <input type="hidden" name="date" value="@Model.Date:yyyy-MM-dd" />
 
-    <!-- Date field -->
-    <div class="form-group">
-        <input type="hidden" class="form-control" id="Date" name="Date" value="@Model.Date.ToString("yyyy-MM-dd")" required />
-    </div>
+    <!-- Date field (hidden but included for completeness) -->
+    <input type="hidden" id="Date" name="Date" value="@Model.Date:yyyy-MM-dd" required />
 
     <!-- Opening Price field -->
     <div class="form-group">
