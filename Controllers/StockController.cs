@@ -179,6 +179,9 @@ namespace Stock_Manager.Controllers
                 return NotFound(); // If stock data is not found, return NotFound
             }
 
+            // Pass the Date as a formatted string to the view
+            ViewBag.FormattedDate = parsedDate.ToString("yyyy-MM-dd");
+
             return View(portfolioStock); // Return portfolio stock for editing
         }
 
