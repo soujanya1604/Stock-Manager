@@ -109,7 +109,7 @@ namespace Stock_Manager.Controllers
                                 var stock = await _context.Stocks.FirstOrDefaultAsync(s => s.Symbol == symbol);
                                 if (stock == null)
                                 {
-                                    stock = new Stock { Symbol = symbol, Name = "Default Stock" };
+                                    stock = new Stock { Symbol = symbol };
                                     _context.Stocks.Add(stock);
                                     await _context.SaveChangesAsync();
                                 }
@@ -284,7 +284,6 @@ namespace Stock_Manager.Controllers
             return _context.PortfolioStocks.Any(e => e.Id == id);
         }
 
-
         public IActionResult Create()
         {
             var portfolioStock = new PortfolioStock
@@ -293,7 +292,11 @@ namespace Stock_Manager.Controllers
             };
 
             var stockSymbols = new List<string> { "AAPL", "GOOGL", "MSFT", "AMZN" };
-            ViewBag.StockSymbols = new SelectList(stockSymbols);
+            ViewBag.StockSymbols = new SelectList(stockSymbols.Select(s => new SelectListItem
+            {
+                Text = s,
+                Value = s
+            }), "Value", "Text"); // This creates SelectList with stock symbol as both Value and Text
 
             return View(portfolioStock);
         }
@@ -314,7 +317,7 @@ namespace Stock_Manager.Controllers
                 if (stock == null)
                 {
                     // Create a new stock entry if it doesn't exist in the database
-                    stock = new Stock { Symbol = portfolioStock.Stock.Symbol, Name = "Default Stock" };
+                    stock = new Stock { Symbol = portfolioStock.Stock.Symbol };
                     _context.Stocks.Add(stock);
                     await _context.SaveChangesAsync();
                 }
@@ -334,8 +337,15 @@ namespace Stock_Manager.Controllers
                 return RedirectToAction("GetStockPrice", "Stock", new { symbol = portfolioStock.Stock.Symbol });
             }
 
-            // Return the view with validation errors if ModelState is invalid
-            return View(portfolioStock);
+            else
+            {
+                    // Log or debug to check which validation errors are present
+                    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        Console.WriteLine(error.ErrorMessage);
+                    }
+                    return View(portfolioStock);
+            }
         }
 
 

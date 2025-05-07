@@ -1,8 +1,10 @@
-﻿<form method="post">
+﻿@model PortfolioStock
+<form method="post">
     <div class="form-group">
         <label for="symbol">Stock Symbol</label>
-        <input type="text" class="form-control" id="symbol" name="Stock.Symbol" value="@Model.Stock.Symbol" required />
+        @Html.DropDownListFor(model => model.Stock.Symbol, (SelectList)ViewBag.StockSymbols, "-- Select Stock --", new { @class = "form-control", required = true })
     </div>
+
     <div class="form-group">
         <label for="Date">Date</label>
         <input type="date" class="form-control" id="Date" name="Date"
