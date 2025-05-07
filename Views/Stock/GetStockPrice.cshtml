@@ -1,33 +1,32 @@
 ﻿@model StockChartViewModel
 
-<h1>Select a Stock Symbol</h1>
+<h1 class="mb-4">Select a Stock Symbol</h1>
 
 <!-- Dropdown for selecting stock symbol -->
-<form method="get" action="@Url.Action("GetStockPrice", "Stock")">
-    <div class="form-group">
+<form method="get" action="@Url.Action("GetStockPrice", "Stock")" class="mb-3">
+    <div class="form-group mb-2">
         <label for="symbol">Stock Symbol</label>
         <select id="symbol" name="symbol" class="form-control" asp-items="ViewBag.StockSymbols" required>
-            <option value="">-- Select Stock --</option> <!-- Default option -->
+            <option value="">-- Select Stock --</option>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Show Stock Data</button>
+    <button type="submit" class="btn btn-primary mt-2">Show Stock Data</button>
 </form>
 
-<!-- Button to create a new stock -->
-@* <a href="@Url.Action("Create", "Stock")" class="btn btn-success mt-3">Create New Stock</a> *@
+<a href="@Url.Action("Create", "Stock")" class="btn btn-success mb-4">Create New Stock</a>
 
 @if (ViewBag.StockData != null)
 {
-    <h2>Stock Data for @ViewBag.SelectedSymbol</h2>
+    <h2 class="mt-4">Stock Data for @ViewBag.SelectedSymbol</h2>
 
     <!-- Display the stock price chart -->
-    <div style="width: 60%; margin: 0 auto;">
-        <canvas id="stockChart" width="400" height="200"></canvas>
+    <div class="my-4" style="max-width: 800px; margin: 0 auto;">
+        <canvas id="stockChart" height="300"></canvas>
     </div>
 
     <!-- Display Stock Data in Table Format -->
-    <table class="table table-striped table-bordered mt-3">
-        <thead>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
             <tr>
                 <th>Date</th>
                 <th>Opening Price</th>
@@ -38,13 +37,13 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var date in ViewBag.StockData.Dates)
+            @for (int i = 0; i < ViewBag.StockData.Dates.Length; i++)
             {
-                var dateIndex = Array.IndexOf(ViewBag.StockData.Dates, date);
-                var closingPrice = ViewBag.StockData.ClosingPrices[dateIndex];
-                var openingPrice = ViewBag.StockData.OpeningPrices[dateIndex];
-                var highPrice = ViewBag.StockData.HighPrices[dateIndex];
-                var lowPrice = ViewBag.StockData.LowPrices[dateIndex];
+                var date = ViewBag.StockData.Dates[i];
+                var openingPrice = ViewBag.StockData.OpeningPrices[i];
+                var closingPrice = ViewBag.StockData.ClosingPrices[i];
+                var highPrice = ViewBag.StockData.HighPrices[i];
+                var lowPrice = ViewBag.StockData.LowPrices[i];
 
                 <tr>
                     <td>@date</td>
@@ -53,14 +52,10 @@
                     <td>@highPrice.ToString("F2")</td>
                     <td>@lowPrice.ToString("F2")</td>
                     <td>
-                        <!-- Stylish Edit and Delete Buttons -->
-                        <a href="@Url.Action("Edit", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })" btn-sm" style="background-color: grey;color: white; border-radius: 4px; padding: 5px 10px; text-decoration: none;">
-                            Edit
-                        </a>
-                        |
-                        <a href="@Url.Action("Delete", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })"  btn-sm" style="background-color: grey; color: white; border-radius: 4px; padding: 5px 10px; text-decoration: none;">
-                            Delete
-                        </a>
+                        <a href="@Url.Action("Edit", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })"
+                           class="btn btn-sm btn-outline-secondary me-1">Edit</a>
+                        <a href="@Url.Action("Delete", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })"
+                           class="btn btn-sm btn-outline-danger">Delete</a>
                     </td>
                 </tr>
             }
