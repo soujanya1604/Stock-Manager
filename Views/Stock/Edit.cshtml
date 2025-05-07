@@ -32,12 +32,6 @@
         <input type="number" step="0.01" class="form-control" id="LowPrice" name="LowPrice" value="@Model.LowPrice" required />
     </div>
 
-    <!-- Quantity field -->
-    <div class="form-group">
-        <label for="Quantity">Quantity</label>
-        <input type="number" class="form-control" id="Quantity" name="Quantity" value="@Model.Quantity" min="1" required />
-    </div>
-
     <button type="submit" class="btn btn-primary">Save Changes</button>
     <a href="@Url.Action("GetStockPrice", "Stock", new { symbol = Model.Stock.Symbol })" class="btn btn-secondary">Cancel</a>
 </form>

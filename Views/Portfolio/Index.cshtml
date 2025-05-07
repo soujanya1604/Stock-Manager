@@ -1,0 +1,41 @@
+﻿@model List<PortfolioStockViewModel>
+
+<h2>Your Portfolio</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Stock Symbol</th>
+            <th>Quantity</th>
+            <th>Opening Price</th>
+            <th>Profit/Loss</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stock in Model)
+        {
+            <tr>
+                <td>@stock.StockSymbol</td>
+                <td>@stock.Quantity</td>
+                <td>@stock.OpeningPrice.ToString("C")</td>
+                <td>
+                    @if (stock.ProfitLoss >= 0)
+                    {
+                        <span class="text-success">+@stock.ProfitLoss.ToString("C")</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">@stock.ProfitLoss.ToString("C")</span>
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", "Portfolio", new { id = stock.Id })" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", "Portfolio", new { id = stock.Id })" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "Portfolio")" class="btn btn-success mt-3">Add New Stock</a>

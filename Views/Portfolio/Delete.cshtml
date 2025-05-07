@@ -1,0 +1,22 @@
+﻿@model DeleteStockViewModel
+
+<h2>Delete Stock</h2>
+
+<p>Are you sure you want to delete stocks from your portfolio?</p>
+
+<div>
+    <strong>Stock:</strong> @Model.StockName (@Model.StockSymbol)
+    <br />
+    <strong>Current Quantity:</strong> @Model.Quantity
+</div>
+
+<form method="post">
+    <div class="form-group">
+        <label for="QuantityToDelete">Quantity to Delete</label>
+        <input type="number" id="QuantityToDelete" name="quantityToDelete" class="form-control" min="1" max="@Model.Quantity" required />
+        <small class="form-text text-muted">Enter the number of stocks to delete. If you want to remove all stocks, enter the current quantity.</small>
+    </div>
+
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+</form>

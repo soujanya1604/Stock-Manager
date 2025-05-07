@@ -1,0 +1,9 @@
+﻿@{
+    ViewData["Title"] = "No Stocks in Portfolio";
+}
+
+<h2>Your Portfolio is Empty</h2>
+<p>You currently don't have any stocks in your portfolio. Start adding stocks to keep track of your investments.</p>
+
+<!-- Optionally, you can provide a link to add stocks -->
+<a href="@Url.Action("Create", "Portfolio")" class="btn btn-primary">Add a Stock</a>

@@ -23,7 +23,6 @@ namespace Stock_Manager.Controllers
         // Action method for getting stock data
         public async Task<IActionResult> GetStockPrice(string symbol)
         {
-
             // Default to AAPL if no symbol is selected
             if (string.IsNullOrEmpty(symbol))
             {
@@ -94,43 +93,46 @@ namespace Stock_Manager.Controllers
                         DateTime date;
                         if (DateTime.TryParse(dateString, out date))
                         {
-                            dates.Add(dateString);
-                            closingPrices.Add(decimal.Parse(closingPrice.ToString()));
-                            openingPrices.Add(decimal.Parse(openingPrice.ToString()));
-                            highPrices.Add(decimal.Parse(highPrice.ToString()));
-                            lowPrices.Add(decimal.Parse(lowPrice.ToString()));
-
-                            // Store the stock data in the in-memory database (if not already present)
-                            var existingStock = await _context.PortfolioStocks
-                                .FirstOrDefaultAsync(ps => ps.Stock.Symbol == symbol && ps.Date == date.Date);
-
-                            if (existingStock == null)
+                            // Check if the date is within the past 10 days
+                            if (date >= DateTime.Now.AddDays(-10))
                             {
-                                var stock = await _context.Stocks.FirstOrDefaultAsync(s => s.Symbol == symbol);
-                                if (stock == null)
+                                dates.Add(dateString);
+                                closingPrices.Add(decimal.Parse(closingPrice.ToString()));
+                                openingPrices.Add(decimal.Parse(openingPrice.ToString()));
+                                highPrices.Add(decimal.Parse(highPrice.ToString()));
+                                lowPrices.Add(decimal.Parse(lowPrice.ToString()));
+
+                                // Store the stock data in the in-memory database (if not already present)
+                                var existingStock = await _context.PortfolioStocks
+                                    .FirstOrDefaultAsync(ps => ps.Stock.Symbol == symbol && ps.Date == date.Date);
+
+                                if (existingStock == null)
                                 {
-                                    stock = new Stock { Symbol = symbol };
-                                    _context.Stocks.Add(stock);
+                                    var stock = await _context.Stocks.FirstOrDefaultAsync(s => s.Symbol == symbol);
+                                    if (stock == null)
+                                    {
+                                        stock = new Stock { Symbol = symbol };
+                                        _context.Stocks.Add(stock);
+                                        await _context.SaveChangesAsync();
+                                    }
+
+                                    var portfolioStock = new PortfolioStock
+                                    {
+                                        StockId = stock.Id,
+                                        Date = date.Date,
+                                        ClosingPrice = decimal.Parse(closingPrice.ToString()),
+                                        OpeningPrice = decimal.Parse(openingPrice.ToString()),
+                                        HighPrice = decimal.Parse(highPrice.ToString()),
+                                        LowPrice = decimal.Parse(lowPrice.ToString()),
+                                        Quantity = 0  // Default quantity (could be set as needed)
+                                    };
+
+                                    _context.PortfolioStocks.Add(portfolioStock);
                                     await _context.SaveChangesAsync();
                                 }
-
-                                var portfolioStock = new PortfolioStock
-                                {
-                                    StockId = stock.Id,
-                                    Date = date.Date,
-                                    ClosingPrice = decimal.Parse(closingPrice.ToString()),
-                                    OpeningPrice = decimal.Parse(openingPrice.ToString()),
-                                    HighPrice = decimal.Parse(highPrice.ToString()),
-                                    LowPrice = decimal.Parse(lowPrice.ToString()),
-                                    Quantity = 0  // Default quantity (could be set as needed)
-                                };
-
-                                _context.PortfolioStocks.Add(portfolioStock);
-                                await _context.SaveChangesAsync();
                             }
                         }
                     }
-
                     // Create the view model
                     var stockData = new StockChartViewModel
                     {
@@ -152,6 +154,7 @@ namespace Stock_Manager.Controllers
                 return NotFound($"No data found for symbol {symbol}.");  // Handle the case if no data is found from the API
             }
         }
+
 
         public async Task<IActionResult> Edit(string symbol, string date)
         {
@@ -307,7 +310,6 @@ namespace Stock_Manager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PortfolioStock portfolioStock)
         {
-            // Assign values from the form or in-memory data before checking ModelState
             if (portfolioStock.Stock.Id == 0)
             {
                 // Set the default stock or fetch from the database
@@ -336,18 +338,16 @@ namespace Stock_Manager.Controllers
                 // Redirect to the stock price page after successfully creating the stock
                 return RedirectToAction("GetStockPrice", "Stock", new { symbol = portfolioStock.Stock.Symbol });
             }
-
             else
             {
-                    // Log or debug to check which validation errors are present
-                    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                    {
-                        Console.WriteLine(error.ErrorMessage);
-                    }
-                    return View(portfolioStock);
+                // Log or debug to check which validation errors are present
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
+                return View(portfolioStock);
             }
         }
-
 
     }
 }

@@ -1,0 +1,23 @@
+﻿<form method="post">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div class="form-group">
+        <label for="StockSymbol">Stock Symbol</label>
+        <select class="form-control" id="StockSymbol" name="StockSymbol" asp-items="ViewBag.StockSymbols" required>
+            <option value="">-- Select Stock Symbol --</option>
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <label for="Quantity">Quantity</label>
+        <input type="number" class="form-control" id="Quantity" name="Quantity" value="@Model.Quantity" required />
+    </div>
+
+    <div class="form-group">
+        <label for="OpeningPrice">Opening Price</label>
+        <input type="number" class="form-control" id="OpeningPrice" name="OpeningPrice" value="@Model.OpeningPrice" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
