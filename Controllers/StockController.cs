@@ -304,31 +304,38 @@ namespace Stock_Manager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PortfolioStock portfolioStock)
         {
-            if (ModelState.IsValid)
+            // Assign values from the form or in-memory data before checking ModelState
+            if (portfolioStock.Stock.Id == 0)
             {
+                // Set the default stock or fetch from the database
                 var stock = await _context.Stocks
                     .FirstOrDefaultAsync(s => s.Symbol == portfolioStock.Stock.Symbol);
 
                 if (stock == null)
                 {
+                    // Create a new stock entry if it doesn't exist in the database
                     stock = new Stock { Symbol = portfolioStock.Stock.Symbol, Name = "Default Stock" };
                     _context.Stocks.Add(stock);
                     await _context.SaveChangesAsync();
                 }
 
+                // Assign the stock ID to the PortfolioStock
                 portfolioStock.StockId = stock.Id;
+            }
+
+            // Now check if the model state is valid
+            if (ModelState.IsValid)
+            {
+                // Add the new portfolio stock to the database
                 _context.PortfolioStocks.Add(portfolioStock);
                 await _context.SaveChangesAsync();
 
+                // Redirect to the stock price page after successfully creating the stock
                 return RedirectToAction("GetStockPrice", "Stock", new { symbol = portfolioStock.Stock.Symbol });
             }
 
-            // If ModelState is invalid, log errors and return to the view
-            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-            {
-                Console.WriteLine(error.ErrorMessage);
-            }
-            return View(portfolioStock); // Return the form with error messages
+            // Return the view with validation errors if ModelState is invalid
+            return View(portfolioStock);
         }
 
 

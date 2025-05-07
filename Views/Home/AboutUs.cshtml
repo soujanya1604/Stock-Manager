@@ -1,13 +1,9 @@
 ﻿@{
-
     ViewData["Title"] = "About Us";
-
 }
 
 <style>
-
     /* General Styles */
-
     body {
         font-family: 'Arial', sans-serif;
         background-color: #f4f7fc;
@@ -24,7 +20,6 @@
     }
 
     /* Container for About Section */
-
     .about-container {
         display: flex;
         flex-direction: column;
@@ -45,7 +40,6 @@
         }
 
     /* Team Members Section */
-
     .team {
         display: flex;
         justify-content: center;
@@ -80,7 +74,6 @@
         }
 
     /* GitHub Link Section */
-
     .github-link {
         text-align: center;
         margin-top: 30px;
@@ -100,6 +93,26 @@
                 background-color: #3498db;
                 color: #fff;
             }
+
+    /* Technical Section */
+    .technical-details {
+        margin-top: 40px;
+        max-width: 800px;
+        text-align: center;
+    }
+
+        .technical-details h3 {
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .technical-details p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #34495e;
+        }
+
 </style>
 
 <h1>About Us</h1>
@@ -110,33 +123,48 @@
     <!-- Team Members Section -->
     <div class="team">
         <div class="team-member">
-            <img src="~/images/Soujanya.jpg" alt="Person 1" />
+            <img src="~/images/Soujanya.jpg" alt="Soujanya Gullapalli" />
             <h3>Soujanya Gullapalli</h3>
-            <p>Lead Developer</p>
         </div>
         <div class="team-member">
-            <img src="~/images/Navya.jpg" alt="Person 2" />
+            <img src="~/images/Navya.jpg" alt="Navya Maddineni" />
             <h3>Navya Maddineni</h3>
-            <p>Co-Developer</p>
         </div>
         <div class="team-member">
-            <img src="~/images/kadiatou.jpg" alt="Person 3" />
+            <img src="~/images/kadiatou.jpg" alt="Kadiatou Sogodogo" />
             <h3>Kadiatou Sogodogo</h3>
-            <p>UI/UX Designer</p>
         </div>
         <div class="team-member">
-            <img src="~/images/Sree.jpg" alt="Person 4" />
+            <img src="~/images/Sree.jpg" alt="Sreedurga Koppula" />
             <h3>Sreedurga Koppula</h3>
-            <p>Quality Assurance</p>
         </div>
     </div>
 
     <!-- Project Summary Section -->
-    <p>Project Summary: This web application allows users to manage stock portfolios, view real-time stock prices, and perform CRUD operations to track their investments.</p>
+    <p>Project Summary: This web application allows users to manage stock portfolios, view real-time stock prices, and perform CRUD operations to track their investments. The stock data is fetched from an external API and stored in an in-memory database for real-time tracking and analysis.</p>
 
     <!-- GitHub Repository Link -->
     <div class="github-link">
-        <strong>GitHub Repository:</strong> <a href="https://github.com/your-repository">Link to GitHub</a>
+        <strong>GitHub Repository:</strong> <a href="https://github.com/soujanya1604/Stock-Manager" target="_blank">Link to GitHub</a>
+    </div>
+
+    <!-- Technical Details Section -->
+    <div class="technical-details">
+        <h3>Technical Details</h3>
+        <p><strong>API Endpoints Used:</strong> The application integrates with the Alpha Vantage API to fetch stock data such as opening, closing, high, and low prices for different stock symbols.</p>
+
+
+        <p><strong>Data Model:</strong> The application uses a simple relational data model with two key entities: Stock and PortfolioStock. The PortfolioStock entity represents individual stock entries in a portfolio with attributes like stock symbol, date, opening price, closing price, high price, low price, and quantity. An updated Entity-Relationship Diagram (ERD) is available in the GitHub repository.</p>
+        <div><img src="/images/ERD.png" alt="ERD" /></div>
+
+        <p><strong>Overview of CRUD Implementation:</strong></p>
+        <p>The application allows users to Create new stock entries by adding details like symbol, date, and prices, while ensuring no duplicates by checking the database first. The Read functionality enables users to view stock data for any selected symbol, displaying it with a visual chart showing stock price trends. Users can Update stock details, such as prices and quantity, and save the changes to the database after validation. The <strong>Delete</strong> feature allows users to remove stocks from their portfolio after confirming the action, ensuring the data is deleted from the database.</p>
+
+        <p><strong>Notable Technical Challenges and Solutions:</strong></p>
+        <p>One of the challenges was preventing duplicate entries, which we solved by checking the database for existing records before adding new stock data. Another challenge was syncing stock data from the API with the user's portfolio, which we addressed by checking if the data already existed before pulling new data. Date formatting issues arose due to different formats from the API, which were resolved by standardizing the date format and adding validation. Lastly, to avoid concurrency issues, we implemented checks to notify users if the data was updated while they were editing.</p>
+
+
+        
     </div>
 </div>
 

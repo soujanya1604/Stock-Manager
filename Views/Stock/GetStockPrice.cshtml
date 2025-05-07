@@ -25,32 +25,47 @@
         <canvas id="stockChart" width="400" height="200"></canvas>
     </div>
 
-    <!-- Display Stock Data in Text Format -->
-    <div style="margin-top: 20px;">
-        <h3>Stock Data</h3>
-        <ul>
+    <!-- Display Stock Data in Table Format -->
+    <table class="table table-striped table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Opening Price</th>
+                <th>Closing Price</th>
+                <th>High Price</th>
+                <th>Low Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (var date in ViewBag.StockData.Dates)
             {
-                var dateIndex = Array.IndexOf(ViewBag.StockData.Dates, date); // Get index of date
-                var closingPrice = ViewBag.StockData.ClosingPrices[dateIndex];  // Get closing price at same index
-                var openingPrice = ViewBag.StockData.OpeningPrices[dateIndex];  // Get opening price
-                var highPrice = ViewBag.StockData.HighPrices[dateIndex];       // Get high price
-                var lowPrice = ViewBag.StockData.LowPrices[dateIndex];         // Get low price
+                var dateIndex = Array.IndexOf(ViewBag.StockData.Dates, date);
+                var closingPrice = ViewBag.StockData.ClosingPrices[dateIndex];
+                var openingPrice = ViewBag.StockData.OpeningPrices[dateIndex];
+                var highPrice = ViewBag.StockData.HighPrices[dateIndex];
+                var lowPrice = ViewBag.StockData.LowPrices[dateIndex];
 
-                <li>
-                    Date: @date
-                    - Opening Price: $@openingPrice.ToString("F2")
-                    - Closing Price: $@closingPrice.ToString("F2")
-                    - High Price: $@highPrice.ToString("F2")
-                    - Low Price: $@lowPrice.ToString("F2")
-
-                    <!-- Edit and Delete Options for each stock entry -->
-                    <a href="@Url.Action("Edit", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })" class="btn btn-warning btn-sm">Edit</a> |
-                    <a href="@Url.Action("Delete", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })" class="btn btn-danger btn-sm">Delete</a>
-                </li>
+                <tr>
+                    <td>@date</td>
+                    <td>@openingPrice.ToString("F2")</td>
+                    <td>@closingPrice.ToString("F2")</td>
+                    <td>@highPrice.ToString("F2")</td>
+                    <td>@lowPrice.ToString("F2")</td>
+                    <td>
+                        <!-- Stylish Edit and Delete Buttons -->
+                        <a href="@Url.Action("Edit", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })" btn-sm" style="background-color: grey;color: white; border-radius: 4px; padding: 5px 10px; text-decoration: none;">
+                            Edit
+                        </a>
+                        |
+                        <a href="@Url.Action("Delete", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })"  btn-sm" style="background-color: grey; color: white; border-radius: 4px; padding: 5px 10px; text-decoration: none;">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
             }
-        </ul>
-    </div>
+        </tbody>
+    </table>
 }
 
 <!-- Chart.js Canvas Script -->
@@ -58,46 +73,24 @@
 <script>
     var ctx = document.getElementById('stockChart').getContext('2d');
     var stockChart = new Chart(ctx, {
-        type: 'line', // Line chart type for stock data
+        type: 'line',
         data: {
-            labels: @Html.Raw(Json.Serialize(Model.Dates)), // X-axis: Dates
+            labels: @Html.Raw(Json.Serialize(Model.Dates)),
             datasets: [{
                 label: '@Model.Symbol Stock Prices',
-                data: @Html.Raw(Json.Serialize(Model.ClosingPrices)), // Y-axis: Closing Prices
+                data: @Html.Raw(Json.Serialize(Model.ClosingPrices)),
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                fill: true, // Fill the area under the line
-                tension: 0.1 // Smooth the line
+                fill: true,
+                tension: 0.1
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Date'
-                    }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Closing Price (USD)'
-                    },
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }
-            },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return '$' + tooltipItem.raw.toFixed(2); // Format the tooltip to show prices in USD
-                        }
-                    }
-                }
+                x: { title: { display: true, text: 'Date' } },
+                y: { title: { display: true, text: 'Closing Price (USD)' }, ticks: { beginAtZero: false } }
             }
         }
     });
