@@ -13,6 +13,9 @@
     <button type="submit" class="btn btn-primary">Show Stock Data</button>
 </form>
 
+<!-- Button to create a new stock -->
+<a href="@Url.Action("Create", "Stock")" class="btn btn-success mt-3">Create New Stock</a>
+
 @if (ViewBag.StockData != null)
 {
     <h2>Stock Data for @ViewBag.SelectedSymbol</h2>
