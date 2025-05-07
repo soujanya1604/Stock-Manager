@@ -1,27 +1,54 @@
 ﻿@model StockChartViewModel
 
-<h1>@Model.Symbol - Stock Price Chart</h1>
+<h1>Select a Stock Symbol</h1>
 
-<!-- Chart.js Canvas -->
-<div style="width: 60%; margin: 0 auto;">
-    <canvas id="stockChart" width="400" height="200"></canvas>
-</div>
+<!-- Dropdown for selecting stock symbol -->
+<form method="get" action="@Url.Action("GetStockPrice", "Stock")">
+    <div class="form-group">
+        <label for="symbol">Stock Symbol</label>
+        <select id="symbol" name="symbol" class="form-control" asp-items="ViewBag.StockSymbols" required>
+            <option value="">-- Select Stock --</option> <!-- Default option -->
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Show Stock Data</button>
+</form>
 
-<!-- Display Stock Data in Text Format -->
-<div style="margin-top: 20px;">
-    <h3>Stock Data</h3>
-    <ul>
-        @foreach (var date in Model.Dates)
-        {
-            <li>
-                Date: @date - Closing Price: $@Model.ClosingPrices[Array.IndexOf(Model.Dates, date)].ToString("F2")
-                <!-- Edit and Delete Options for each stock entry -->
-                <a href="@Url.Action("Edit", "Stock", new { symbol = Model.Symbol, date = date })" class="btn btn-warning btn-sm">Edit</a> |
-                <a href="@Url.Action("Delete", "Stock", new { symbol = Model.Symbol, date = date })" class="btn btn-danger btn-sm">Delete</a>
-            </li>
-        }
-    </ul>
-</div>
+@if (ViewBag.StockData != null)
+{
+    <h2>Stock Data for @ViewBag.SelectedSymbol</h2>
+
+    <!-- Display the stock price chart -->
+    <div style="width: 60%; margin: 0 auto;">
+        <canvas id="stockChart" width="400" height="200"></canvas>
+    </div>
+
+    <!-- Display Stock Data in Text Format -->
+    <div style="margin-top: 20px;">
+        <h3>Stock Data</h3>
+        <ul>
+            @foreach (var date in ViewBag.StockData.Dates)
+            {
+                var dateIndex = Array.IndexOf(ViewBag.StockData.Dates, date); // Get index of date
+                var closingPrice = ViewBag.StockData.ClosingPrices[dateIndex];  // Get closing price at same index
+                var openingPrice = ViewBag.StockData.OpeningPrices[dateIndex];  // Get opening price
+                var highPrice = ViewBag.StockData.HighPrices[dateIndex];       // Get high price
+                var lowPrice = ViewBag.StockData.LowPrices[dateIndex];         // Get low price
+
+                <li>
+                    Date: @date
+                    - Opening Price: $@openingPrice.ToString("F2")
+                    - Closing Price: $@closingPrice.ToString("F2")
+                    - High Price: $@highPrice.ToString("F2")
+                    - Low Price: $@lowPrice.ToString("F2")
+
+                    <!-- Edit and Delete Options for each stock entry -->
+                    <a href="@Url.Action("Edit", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })" class="btn btn-warning btn-sm">Edit</a> |
+                    <a href="@Url.Action("Delete", "Stock", new { symbol = ViewBag.SelectedSymbol, date = date })" class="btn btn-danger btn-sm">Delete</a>
+                </li>
+            }
+        </ul>
+    </div>
+}
 
 <!-- Chart.js Canvas Script -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

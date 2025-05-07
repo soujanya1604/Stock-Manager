@@ -1,17 +1,22 @@
-﻿namespace Stock_Manager.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Stock_Manager.Models
 {
     public class PortfolioStock
     {
+        [Key]
         public int Id { get; set; }
-        public int PortfolioId { get; set; }
         public int StockId { get; set; }
-        public DateTime Date { get; set; } // Ensure you have a Date field to allow editing the date
-        public decimal ClosingPrice { get; set; } // Add ClosingPrice to store the stock price
+        public DateTime Date { get; set; }
+        public decimal ClosingPrice { get; set; }
+        public decimal OpeningPrice { get; set; }  
+        public decimal HighPrice { get; set; }    
+        public decimal LowPrice { get; set; }     
         public int Quantity { get; set; }
 
-        // Navigation properties
-        public Portfolio Portfolio { get; set; }
+        // Navigation property for the related Stock
         public Stock Stock { get; set; }
     }
+
 
 }
